@@ -52,41 +52,41 @@ You can find the client code [here](https://github.com/patrickjfl/progress-plus-
 *
 *```
 *
-```
-
-### POST to /feedback
-
-### GET to /feedback
-
-Returns to successful requests in the form:
-
-```
-{success: true,
-data: [{"uid": string,
-"name": string,
-"role": string,
-"cohort": integer,
-"feedbackid": integer,
-"bootcamperuid": string,
-"coachname": string,
-"feedbackdate": dateTime,
-"subject": string,
-"week": integer,
-"type": string,
-"passedtests": integer,
-"totaltests": integer,
-"qualitative": string,
-"duedate": dateTime,
-"datesubmitted": dateTime}, ... ]}
-```
-
-The elipses represent more objects with the same keys.
-
-Firstly checks if there is a uid query, if there is then it will execute next() and move on to the next middleware function.
-
-### POST to /feedback/data
-
-### PATCH TO /feedback/:feedbackid
-
-### GET to /feedback/:uid
+*```
+*
+*### POST to /feedback
+*
+*### GET to /feedback
+*
+*Returns to successful requests in the form:
+*
+*```
+*{success: true,
+*data: [{"uid": string,
+*"name": string,
+*"role": string,
+*"cohort": integer,
+*"feedbackid": integer,
+*"bootcamperuid": string,
+*"coachname": string,
+*"feedbackdate": dateTime,
+*"subject": string,
+*"week": integer,
+*"type": string,
+*"passedtests": integer,
+*"totaltests": integer,
+*"qualitative": string,
+*"duedate": dateTime,
+*"datesubmitted": dateTime}, ... ]}
+*```
+*
+*The elipses represent more objects with the same keys.
+*
+*Firstly checks if there is a uid query, if there is then it will execute next() and move on to the next middleware function.
+*
+*### POST to /feedback/data
+*
+*### PATCH TO /feedback/:feedbackid
+*
+*### GET to /feedback/:uid
 */
