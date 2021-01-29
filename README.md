@@ -26,32 +26,32 @@ You can find the client code [here](https://github.com/patrickjfl/progress-plus-
 
 - `npm start` - run the server
 
-## ---- Routes ----
-
-All routes use a middleware function that checks their Firebase authentication, If they fail the check, they are returned the message
-_You are not authorized to make this request_.  Our authorisation system means that the API routes can only be accessed with a Firebase
-token that the user receives when they log in to the client application.  This token must be included as a header in any request. 
-
-### POST to /
-
-
-
-### GET to /
-
-Returns to successful requests in the from:
-
-```
-
-```
-
-
-
-### GET to /:uid
-
-Returns to successful requests in the from:
-
-```
-
+/** ## ---- Routes ----
+*
+*All routes use a middleware function that checks their Firebase authentication, If they fail the check, they are returned the message
+*_You are not authorized to make this request_.  Our authorisation system means that the API routes can only be accessed with a Firebase
+*token that the user receives when they log in to the client application.  This token must be included as a header in any request. 
+*
+*### POST to /
+*
+*
+*
+*### GET to /
+*
+*Returns to successful requests in the from:
+*
+*```
+*
+*```
+*
+*
+*
+*### GET to /:uid
+*
+*Returns to successful requests in the from:
+*
+*```
+*
 ```
 
 ### POST to /feedback
@@ -89,3 +89,4 @@ Firstly checks if there is a uid query, if there is then it will execute next() 
 ### PATCH TO /feedback/:feedbackid
 
 ### GET to /feedback/:uid
+*/
