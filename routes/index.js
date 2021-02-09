@@ -8,10 +8,6 @@ const {
   populateDemoData,
 } = require('../models/index');
 
-var {
-  checkIfAuthenticated,
-} = require('../controllers/middleware/auth.middleware');
-
 // Bootcamper routes
 
 // 1. Create a profile with a post request
@@ -20,7 +16,7 @@ var {
 // expecting req.body to contain a json with keys of uid, role and cohort.
 // returns the data back if needed.
 
-router.post('/', checkIfAuthenticated, async function (req, res, next) {
+router.post('/', async function (req, res, next) {
   try {
     console.log('Creating a bootcamper profile...');
     const profile = req.body;
@@ -37,7 +33,7 @@ router.post('/', checkIfAuthenticated, async function (req, res, next) {
 
 // 2. Returns all the names of bootcampers
 
-router.get('/', checkIfAuthenticated, async function (req, res, next) {
+router.get('/', async function (req, res, next) {
   try {
     console.log('Retrieving all profiles ...');
     const result = await selectAllBootcampers();
@@ -55,7 +51,7 @@ router.get('/', checkIfAuthenticated, async function (req, res, next) {
 // returns all the data from that user in the users table
 // needed to move to the bottom as it was interfiering with other routes
 
-router.get('/:uid', checkIfAuthenticated, async function (req, res, next) {
+router.get('/:uid', async function (req, res, next) {
   try {
     console.log('Retrieving bootcamper profile ...');
     const uid = req.params.uid;
@@ -63,7 +59,7 @@ router.get('/:uid', checkIfAuthenticated, async function (req, res, next) {
     res.json({ success: true, data: result });
     console.log(`Recieved bootcamper profile with uid = ${result[0].uid}`);
   } catch (error) {
-    console.log(error.message);
+    console.log("error", error.message);
     res.json({ success: false, data: error.message });
   }
 });
