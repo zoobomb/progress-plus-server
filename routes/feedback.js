@@ -6,16 +6,19 @@ const {
   getAllFeedback,
   postFeedback,
   populateDemoData,
+  updateFeedback,
 } = require('../models/index');
 
-var { checkIfAuthenticated } = require('../src/cors/auth.middleware');
+var {
+  checkIfAuthenticated,
+} = require('../controllers/middleware/auth.middleware');
 
 // 1. GET requests to view the bootcamper feedback
 
 // request from the coaches to view all of the bootcamper data
 // return
 
-router.get('/', checkIfAuthenticated, async function (req, res, next) {
+router.get('/', async function (req, res, next) {
   if (req.query.uid === undefined) {
     try {
       console.log('retrieving all of the bootcamper feedback...');
@@ -37,7 +40,7 @@ router.get('/', checkIfAuthenticated, async function (req, res, next) {
 // expects a request to /feedback with uid and type in the params separated by a /.
 // returns all the data in the table for the corresponding user of the specified type. (mastery/recap)
 
-router.get('/', checkIfAuthenticated, async function (req, res, next) {
+router.get('/', async function (req, res, next) {
   try {
     console.log('retrieving feedback ...');
 
@@ -61,7 +64,7 @@ router.get('/', checkIfAuthenticated, async function (req, res, next) {
 // expecting json with keys of bootcamperuid, coachName, dateSubmitted, subject, week, type, quantitative, qualitative, dueDate and dateSubmitted.
 // returns the data in the same format if needed.
 
-router.post('/', checkIfAuthenticated, async function (req, res, next) {
+router.post('/', async function (req, res, next) {
   try {
     console.log('Posting feedback ...');
     const feedback = req.body;
@@ -78,7 +81,7 @@ router.post('/', checkIfAuthenticated, async function (req, res, next) {
 
 //Needs refactoring!!
 
-router.post('/data', checkIfAuthenticated, async function (req, res, next) {
+router.post('/data', async function (req, res, next) {
   try {
     console.log('populating data ...');
     const uid = req.body.uid;
@@ -90,5 +93,23 @@ router.post('/data', checkIfAuthenticated, async function (req, res, next) {
     res.json({ success: false, data: err });
   }
 });
+
+//Patch req
+router.patch(
+  '/:feedbackid',
+  async function (req, res, next) {
+    try {
+      // console.log('feedback updating...');
+      console.log(req.body);
+      const { feedbackid } = req.params;
+      const { body } = req;
+      const result = await updateFeedback(feedbackid, body);
+      res.json({ success: true, data: result });
+      //console.log('feedback is updated');
+    } catch (err) {
+      res.json({ success: false, data: err.message });
+    }
+  }
+);
 
 module.exports = router;

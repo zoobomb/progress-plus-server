@@ -22,7 +22,7 @@ async function bootcamperLogin(uid) {
 async function getBootcamperFeedback(profile) {
   console.log(profile);
   const result = await query(
-    `SELECT * FROM feedback WHERE bootcamperuid = $1 AND type = $2`,
+    `SELECT * FROM users INNER JOIN feedback ON (users.uid = feedback.bootcamperuid) WHERE uid = $1 AND type = $2`,
     [profile.uid, profile.type]
   );
   return result.rows;
@@ -79,7 +79,7 @@ async function populateDemoData(uid) {
       [
         object.bootcamperuid,
         object.coachname,
-        object.objectdate,
+        object.feedbackdate,
         object.subject,
         object.week,
         object.type,
@@ -92,19 +92,43 @@ async function populateDemoData(uid) {
     );
     return [...result, temp];
   });
-  //   const sqlStatement = `
-  //     INSERT INTO feedback
-  //         (bootcamperuid, coachname, feedbackdate, subject, week, type, passedtests, totaltests, qualitative, duedate, datesubmitted)
-  //     VALUES
-  //         ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-  // ;`;
-  // const feedbacksArray = demoData(uid);
-  // for (const feedback of feedbacksArray) {
-  //   feedbackDataArray = Object.values(feedback);
-  //   await query(sqlStatement, feedbackDataArray);
-  //   ()
-  // }
-  // console.log('made it');
+}
+
+//Updating feedback in table. Patch request for edit button.
+async function updateFeedback(feedbackId, feedback) {
+  const {
+    bootcamperuid,
+    coachname,
+    feedbackdate,
+    subject,
+    week,
+    type,
+    passedtests,
+    totaltests,
+    qualitative,
+    duedate,
+    datesubmitted,
+  } = feedback;
+  //console.log(feedback);
+  sqlStatement = `UPDATE feedback SET bootcamperuid = COALESCE($2, bootcamperuid),
+  coachname=COALESCE($3, coachname),feedbackdate=COALESCE($4,feedbackdate),subject=COALESCE($5, subject), week=COALESCE($6, week),
+  type=COALESCE($7, type),passedtests=COALESCE($8, passedtests),totaltests=COALESCE($9, totaltests),qualitative=COALESCE($10, qualitative),duedate=COALESCE($11, duedate),datesubmitted=COALESCE($12, datesubmitted) WHERE feedbackid=$1 RETURNING *;`;
+  const result = await query(sqlStatement, [
+    feedbackId,
+    bootcamperuid,
+    coachname,
+    feedbackdate,
+    subject,
+    week,
+    type,
+    passedtests,
+    totaltests,
+    qualitative,
+    duedate,
+    datesubmitted,
+  ]);
+  // console.log(result);
+  return result.rows[0];
 }
 
 module.exports = {
@@ -115,4 +139,5 @@ module.exports = {
   getAllFeedback,
   selectAllBootcampers,
   populateDemoData,
+  updateFeedback,
 };

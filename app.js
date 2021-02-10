@@ -9,6 +9,9 @@ require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var feedbackRouter = require('./routes/feedback');
+var {
+  checkIfAuthenticated,
+} = require('./controllers/middleware/auth.middleware');
 
 var app = express();
 
@@ -23,7 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use('/feedback', feedbackRouter);
-app.use('/', indexRouter);
+app.use('/', checkIfAuthenticated, indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
