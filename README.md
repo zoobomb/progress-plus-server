@@ -6,7 +6,7 @@ This is a platform to allow School of Code bootcampers and coaches to track the 
 
 Here is the [deployed version](http://3.250.192.68:3000/), which is hosted in a cluster on AWS's Elastic Container Service. 
 
-You can find the client code [here](https://github.com/patrickjfl/progress-plus-client).
+You can find the client code [here](https://github.com/zoobomb/progress-plus-client).
 
 ## Stack
 
@@ -18,7 +18,7 @@ You can find the client code [here](https://github.com/patrickjfl/progress-plus-
 
 ## Getting started
 
-1. Clone the repo: `git clone https://github.com/patrickjfl/progress-plus-server.git`
+1. Clone the repo: `git clone https://github.com/zoobomb/progress-plus-server.git`
 
 2. Download the required npm modules: `npm i`
 
